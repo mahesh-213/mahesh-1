@@ -1,0 +1,105 @@
+<!-- post.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>/* styles.css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header, footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        
+        main {
+            padding: 1rem;
+        }
+        
+        #blog-posts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .blog-post {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 5px;
+            flex: 1 0 300px;
+        }
+        
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        </style>
+    <script>// app.js
+        document.addEventListener("DOMContentLoaded", function() {
+            // Example blog post data
+            const blogPosts = [
+                { title: "First Post", content: "This is the content of the first post." },
+                { title: "Second Post", content: "This is the content of the second post." },
+                { title: "Third Post", content: "This is the content of the third post." }
+            ];
+        
+            const blogPostsContainer = document.getElementById("blog-posts");
+        
+            // Populate blog posts on the homepage
+            blogPosts.forEach(post => {
+                const postElement = document.createElement("div");
+                postElement.classList.add("blog-post");
+                postElement.innerHTML = `
+                    <h2>${post.title}</h2>
+                    <p>${post.content}</p>
+                    <a href="post.html">Read more</a>
+                `;
+                blogPostsContainer.appendChild(postElement);
+            });
+        
+            // Dynamically load individual blog post on post.html
+            const postContainer = document.getElementById("blog-post");
+            if (postContainer) {
+                const params = new URLSearchParams(window.location.search);
+                const postIndex = params.get("post");
+                if (postIndex !== null && postIndex < blogPosts.length) {
+                    const post = blogPosts[postIndex];
+                    postContainer.innerHTML = `
+                        <h2>${post.title}</h2>
+                        <p>${post.content}</p>
+                    `;
+                } else {
+                    postContainer.innerHTML = "<p>Post not found.</p>";
+                }
+            }
+        });
+        </script>
+</head>
+<body>
+    <header>
+        <h1>My Blog</h1>
+        <a href="index.html">Back to Home</a>
+    </header>
+    
+    <main>
+        <article id="blog-post">
+            <!-- Blog post content will be inserted here dynamically -->
+        </article>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Blog</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
